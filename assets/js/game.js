@@ -1,9 +1,3 @@
-console.log("SOMETHING SHOULD APPEAR HERE");
-
-
-
-
-
 ///////////////////////////////////////////////////
 ///////////////////Fight Function//////////////////
 //////////////////////////////////////////////////
@@ -74,6 +68,10 @@ var startGame = function () {
     for (var i = 0; i < enemyInfo.length; i++) {
         if (playerInfo.health > 0) {//needed because this message will be looped after the player dies otherwise
             window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
+
+            debugger;
+
+            
             var pickedEnemyObj = enemyInfo[i]; //this is for semantic purposes
 
             pickedEnemyObj.health = randomNumber(40, 60);
@@ -166,7 +164,7 @@ var randomNumber = function (min, max) {
 
 ///player object///
 var playerInfo = {
-    name: window.prompt("What is your robot's name?"),
+    name: getPlayerName(),
     health: 100,
     attack: 10,
     money: 10,
@@ -196,6 +194,17 @@ var playerInfo = {
           }
     }
 };
+
+var getPlayerName = function(){
+    var name = "";
+
+    while (name === "" || name === null) {
+        name = prompt("What is your robot's name?");
+      }
+
+    console.log("Your robot's name is " + name);
+    return name;
+}
 
 
 //you can also log multiple vars at once
