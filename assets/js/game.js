@@ -24,7 +24,7 @@ var fight = function (enemyName) {
             //if yes then quit
             if (confirmSkip) {
                 window.alert(playerName + " has chosen to skip the fight! Goodbye!");
-                playerMoney = playerMoney - 10;
+                playerMoney = Math.max(0,playerMoney - 10);
                 console.log("playerMoney", playerMoney);
                 break;
             } //if no (false) restart game 
@@ -32,7 +32,8 @@ var fight = function (enemyName) {
         ///////////////Init Fight////////////////////
         if (promptFight === "fight" || promptFight === "FIGHT") {
             //////////////Player Attacks/////////////////
-            enemyHealth = enemyHealth - playerAttack;
+            var damage = randomNumber(playerAttack-3,playerAttack);
+            enemyHealth = Math.max(0,enemyHealth - damage);
             //log result
             console.log(playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining.");
 
@@ -47,7 +48,8 @@ var fight = function (enemyName) {
             };
 
             /////////////Enemy Attacks///////////////
-            playerHealth = playerHealth - enemyAttack;
+            var damage = randomNumber(enemyAttack-3, enemyAttack);
+            playerHealth = Math.max(0,playerHealth - damage);
             //log result
             console.log(enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining.");
 
@@ -83,7 +85,7 @@ var startGame = function () {
             window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
             var pickedEnemyName = enemyNames[i]; //this is for semantic purposes
 
-            enemyHealth = 50;
+            enemyHealth = randomNumber(40,60);
 
             //pass pickedEnemyName to function fight()
             fight(pickedEnemyName);
@@ -103,7 +105,7 @@ var startGame = function () {
             }
         }
         //play again
-        //endGame();
+        endGame();
     }
 
 }
@@ -137,33 +139,32 @@ var shop = function () {
 
     var shopOptionPrompt = window.prompt(
         "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice.");
-    
-      switch (shopOptionPrompt) 
-        {
+
+    switch (shopOptionPrompt) {
         case "REFILL":
         case "refill":
-            if (playerMoney >=7){
-            window.alert("Refilling players health by 20 for 7 dollars");
-            playerHealth += 6;
-            playerMoney -=7;
-            
+            if (playerMoney >= 7) {
+                window.alert("Refilling players health by 20 for 7 dollars");
+                playerHealth += 6;
+                playerMoney -= 7;
+
             }
-            else {window.alert('You dont have enough money')}
+            else { window.alert('You dont have enough money') }
             break;
-        
+
         case "UPGRADE":
         case "upgrade":
-            if (playerMoney >= 7){
-        window.alert("Upgrading player's attack by 6 for 7 dollars.");
+            if (playerMoney >= 7) {
+                window.alert("Upgrading player's attack by 6 for 7 dollars.");
 
-        playerAttack +=  6;
-        playerMoney -=  7;
-        }
-        else{
-            window.alert("You dont have enough money.");
-        }
+                playerAttack += 6;
+                playerMoney -= 7;
+            }
+            else {
+                window.alert("You dont have enough money.");
+            }
 
-        break;
+            break;
 
         case "LEAVE":
         case "leave":
@@ -174,9 +175,17 @@ var shop = function () {
             window.alert('You did not pick a valid option. Try again.');
             shop();
             break;
-        }
+    }
     //goes back to game loop
 }
+//////////////////////////////
+//////RandomNumber Gen////////
+/////////////////////////////
+var randomNumber = function(min, max) {
+    var value = Math.floor(Math.random() *(max-min+1)+min);
+  
+    return value;
+  };
 
 ////This initiates the game
 startGame();
