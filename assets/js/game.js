@@ -1,23 +1,43 @@
+var fightOrSkip = function() {
+    // ask player if they'd like to fight or skip using fightOrSkip function
+    var promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
+// Conditional Recursive Function Call
+if (promptFight === "" || promptFight === null) {
+    window.alert("You need to provide a valid answer! Please try again.");
+    return fightOrSkip();
+  }
+
+  promptFight = promptFight.toLowerCase();
+  
+    // if player picks "skip" confirm and then stop the loop
+    if (promptFight === "skip" || promptFight === "SKIP") {
+      // confirm player wants to skip
+      var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+  
+      // if yes (true), leave fight
+      if (confirmSkip) {
+        window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
+        // subtract money from playerMoney for skipping
+        playerInfo.playerMoney = playerInfo.money - 10;
+        return true;
+        shop();
+      }
+    }
+    return false
+  }
+
 ///////////////////////////////////////////////////
 ///////////////////Fight Function//////////////////
 //////////////////////////////////////////////////
 var fight = function (enemy) {
     ////////////Fight or Skip//////////////////
     while (enemy.health > 0 && playerInfo.health > 0) {
-        var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-        if (promptFight === "skip" || promptFight === "SKIP") {
-            //ask if sure
-            var confirmSkip = window.confirm("Are you sure you want to quit?")
-            //if yes then quit
-            if (confirmSkip) {
-                window.alert(playerInfo.name + " has chosen to skip the fight! Goodbye!");
-                playerInfo.money = Math.max(0, playerInfo.money - 10);
-                console.log("playerInfo.money", playerInfo.money);
-                break;
-            } //if no (false) restart game 
-        }
+        
+        
+     
         ///////////////Init Fight////////////////////
-        if (promptFight === "fight" || promptFight === "FIGHT") {
+        if (fightOrSkip()) {break;}
+        
             //////////////Player Attacks/////////////////
             var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
             enemy.health = Math.max(0, enemy.health - damage);
@@ -48,7 +68,7 @@ var fight = function (enemy) {
             else {
                 window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
             }
-        }
+        
 
 
 
@@ -69,7 +89,7 @@ var startGame = function () {
         if (playerInfo.health > 0) {//needed because this message will be looped after the player dies otherwise
             window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
 
-            debugger;
+            
 
             
             var pickedEnemyObj = enemyInfo[i]; //this is for semantic purposes
@@ -162,6 +182,17 @@ var randomNumber = function (min, max) {
     return value;
 };
 
+var getPlayerName = function(){
+    var name = "";
+
+    while (name === "" || name === null) {
+        name = prompt("What is your robot's name?");
+      }
+
+    console.log("Your robot's name is " + name);
+    return name;
+}
+
 ///player object///
 var playerInfo = {
     name: getPlayerName(),
@@ -195,16 +226,7 @@ var playerInfo = {
     }
 };
 
-var getPlayerName = function(){
-    var name = "";
 
-    while (name === "" || name === null) {
-        name = prompt("What is your robot's name?");
-      }
-
-    console.log("Your robot's name is " + name);
-    return name;
-}
 
 
 //you can also log multiple vars at once
