@@ -1,3 +1,5 @@
+console.log("SOMETHING SHOULD APPEAR HERE");
+
 var playerName = window.prompt("What is your robot's name?");
 var playerHealth = 100;
 var playerAttack = 10;
@@ -85,6 +87,11 @@ var startGame = function () {
 
             //pass pickedEnemyName to function fight()
             fight(pickedEnemyName);
+            ////Shop Call AFTER each battle////
+            //If there's still an enemy left to fight
+            if (playerHealth > 0 && i < enemyNames.length - 1) {
+                shop();
+              }
         }
         else {
             windoes.alert('You have lost your robot in battle! Game Over!')
@@ -116,7 +123,13 @@ var endGame = function() {
         window.alert("Thanks for playing Robot Gladiators! Come Back Soon!");
     }
 }
+//////////////////////////////////
+////////////Shop Function////////
+////////////////////////////////
+var shop = function(){
+    console.log('You have entered the Robo-Shop');
 
+}
 
 ////This initiates the game
 startGame();
